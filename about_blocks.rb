@@ -74,6 +74,7 @@ class AboutBlocks < Neo::Koan
     assert_equal 11, add_one[10] # again retarded now why the hell anyone should write this it confuses with arrays
     assert_equal 11, add_one.(10) # at least this makes some sense but why the hell anyone would put a .(10) why don't add_one(10)  end
     # a lambda is an object not a method simple call add_one(10) is reserved for methods and not for objects. So we have to use the call method or the [] or .() syntax to invoke the lambda object with an argument.
+  end
 
   def test_stand_alone_blocks_can_be_passed_to_methods_expecting_blocks
     # this is like passing a apply logic to an existing method which is giving a value let's say method_with_block_arguments returns a square side and then we use a block to calculate the area of the square. So we can pass a block to an existing method to apply some logic on the value returned by that method.

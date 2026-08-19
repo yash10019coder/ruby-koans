@@ -23,6 +23,39 @@ def add_one(number)
 end
 ```
 
+## The Practical Convention
+
+You do not need all of the block syntax at once. Choose based on where the behavior belongs:
+
+- Use a **method** when the behavior has a name and belongs to the class or object.
+- Use a **block** for temporary behavior used by one method call.
+- Use a **lambda** when the behavior must be stored, reused, or passed around as a value.
+
+In everyday Ruby, this is the most common pattern:
+
+```ruby
+numbers = [1, 2, 3]
+numbers.map { |number| number + 1 }
+# => [2, 3, 4]
+```
+
+If the same operation is reused, store it in a lambda and pass it with `&`:
+
+```ruby
+add_one = ->(number) { number + 1 }
+numbers.map(&add_one)
+# => [2, 3, 4]
+```
+
+These two forms do the same thing:
+
+```ruby
+numbers.map { |number| number + 1 }
+numbers.map(&add_one)
+```
+
+`yield`, `&block`, and `block.call` are mainly tools for **writing methods that accept blocks**. When using Ruby's built-in methods such as `map`, `each`, and `select`, you normally just provide a block.
+
 ## Passing a Block to a Method
 
 A method can receive a block and run it with `yield`:

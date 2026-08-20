@@ -42,7 +42,7 @@ It was the worst of times.
 }
     assert_equal 54, long_string.length # 25 chars in first line 26 in second + 1 newline in the middle  + 1 newline at the very start and 1 new line at the very end = 52 chars in two lines
     assert_equal 3, long_string.lines.count # three lines because of the newline at the very start 
-    assert_equal '\n', long_string[0,1]
+    assert_equal "\n", long_string[0,1] # learning here is that double quotes represnt the newline that's when i gets a single character but if were to use single quotes here which i did earlier then it would have been two characters which would make it false.
   end
 
   def test_here_documents_can_also_handle_multiple_lines
@@ -50,9 +50,10 @@ It was the worst of times.
 It was the best of times,
 It was the worst of times.
 EOS
-    assert_equal 54, long_string.length # same here as well nothing different
-    assert_equal 3, long_string.lines.count # same here
-    assert_equal '\n', long_string[0,1]
+    # it was my mistake to think things are same in ruby there's always a twist
+    assert_equal 53, long_string.length # when creating strings with EOS/documents then there is no new line at the very start there fore it's 53 chars here
+    assert_equal 2, long_string.lines.count # documents do not add new lines by default here
+    assert_equal "I", long_string[0,1] # here the diff is that there is no new line at the start so we get I which I did in the test case previous to this test case which is present above.
   end
 
   def test_plus_will_concatenate_two_strings
@@ -80,7 +81,7 @@ EOS
     hi = original_string
     there = "World"
     hi += there
-    assert_equal "Hello, World", original_string
+    assert_equal "Hello, ", original_string # don't know how did the mistake here to add World as well but my above comment is right so let's move forward for now.
   end
 
   def test_the_shovel_operator_will_also_append_content_to_a_string
@@ -141,7 +142,7 @@ EOS
   def test_you_can_get_a_substring_from_a_string
     string = "Bacon, lettuce and tomato"
     assert_equal 'let', string[7,3]
-    assert_equal 'lettuce a', string[7..9]
+    assert_equal 'let', string[7..9] # My bad my bad this is a range and I misunderstood this for a ,  that too a inclusive range and I was writing the answer for sring[7,9]
   end
 
   def test_you_can_get_a_single_character_from_a_string

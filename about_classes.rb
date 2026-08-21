@@ -6,7 +6,7 @@ class AboutClasses < Neo::Koan
 
   def test_instances_of_classes_can_be_created_with_new
     fido = Dog.new
-    assert_equal __, fido.class
+    assert_equal Dog, fido.class
   end
 
   # ------------------------------------------------------------------
@@ -19,21 +19,21 @@ class AboutClasses < Neo::Koan
 
   def test_instance_variables_can_be_set_by_assigning_to_them
     fido = Dog2.new
-    assert_equal __, fido.instance_variables
+    assert_equal [], fido.instance_variables # initially there are no instance variables since only class is created it'll get a value when we call set_name
 
     fido.set_name("Fido")
-    assert_equal __, fido.instance_variables
+    assert_equal [:@name], fido.instance_variables
   end
 
   def test_instance_variables_cannot_be_accessed_outside_the_class
     fido = Dog2.new
-    fido.set_name("Fido")
+    fido.set_name("Fido") # we cannot acecss @name as we do not have getter or setters currently @name is a private variable
 
-    assert_raise(___) do
+    assert_raise(NoMethodError) do
       fido.name
     end
 
-    assert_raise(___) do
+    assert_raise(SyntaxError) do
       eval "fido.@name"
       # NOTE: Using eval because the above line is a syntax error.
     end
@@ -43,24 +43,26 @@ class AboutClasses < Neo::Koan
     fido = Dog2.new
     fido.set_name("Fido")
 
-    assert_equal __, fido.instance_variable_get("@name")
+    assert_equal "Fido", fido.instance_variable_get("@name") # getting the value with .instance_variable_get with direclty passing the instance varaible name
   end
 
   def test_you_can_rip_the_value_out_using_instance_eval
     fido = Dog2.new
     fido.set_name("Fido")
 
-    assert_equal __, fido.instance_eval("@name")  # string version
-    assert_equal __, fido.instance_eval { @name } # block version
+    # directly access value of  the variable with .instance_eval in both string & block version
+
+    assert_equal "Fido", fido.instance_eval("@name")  # string version
+    assert_equal "Fido", fido.instance_eval { @name } # block version
   end
 
   # ------------------------------------------------------------------
 
   class Dog3
-    def set_name(a_name)
+    def set_name(a_name) #manual setter
       @name = a_name
     end
-    def name
+    def name # manual Getter
       @name
     end
   end
@@ -69,13 +71,13 @@ class AboutClasses < Neo::Koan
     fido = Dog3.new
     fido.set_name("Fido")
 
-    assert_equal __, fido.name
+    assert_equal "Fido", fido.name
   end
 
   # ------------------------------------------------------------------
 
   class Dog4
-    attr_reader :name
+    attr_reader :name # ruby getter style
 
     def set_name(a_name)
       @name = a_name
@@ -85,52 +87,55 @@ class AboutClasses < Neo::Koan
 
   def test_attr_reader_will_automatically_define_an_accessor
     fido = Dog4.new
-    fido.set_name("Fido")
+    fido.set_name("Fido") 
 
-    assert_equal __, fido.name
+    assert_equal "Fido", fido.name
   end
 
   # ------------------------------------------------------------------
 
   class Dog5
-    attr_accessor :name
+    attr_accessor :name # ruby Getter + Setter 
   end
 
 
   def test_attr_accessor_will_automatically_define_both_read_and_write_accessors
     fido = Dog5.new
 
-    fido.name = "Fido"
-    assert_equal __, fido.name
+    fido.name = "Fido" # Write 
+    assert_equal "Fido", fido.name # READ
+    # we can do both with attr_accessor
   end
 
   # ------------------------------------------------------------------
 
   class Dog6
     attr_reader :name
-    def initialize(initial_name)
+    def initialize(initial_name) # constructor in ruby for intialize values ran for the very first time
       @name = initial_name
     end
   end
 
   def test_initialize_provides_initial_values_for_instance_variables
-    fido = Dog6.new("Fido")
-    assert_equal __, fido.name
+    fido = Dog6.new("Fido") # constructor in ruby
+    assert_equal "Fido", fido.name # as we have already defined attr_reader
   end
 
   def test_args_to_new_must_match_initialize
-    assert_raise(___) do
-      Dog6.new
+    assert_raise(ArgumentError) do 
+      Dog6.new # since intialize expects a argument but we are passing none
     end
     # THINK ABOUT IT:
-    # Why is this so?
+    # Why is this so? 
+    # so that at class creation time there can be any errors if someone is not passing proper arguments
+    # if we say the exact thing: initialize is a method and expects a argument. It's just a special method we are calling before new so for any other method we would get the same error.
   end
 
   def test_different_objects_have_different_instance_variables
     fido = Dog6.new("Fido")
     rover = Dog6.new("Rover")
 
-    assert_equal __, rover.name != fido.name
+    assert_equal true, rover.name != fido.name
   end
 
   # ------------------------------------------------------------------
@@ -159,32 +164,32 @@ class AboutClasses < Neo::Koan
     fido = Dog7.new("Fido")
 
     fidos_self = fido.get_self
-    assert_equal __, fidos_self
+    assert_equal fido, fidos_self
   end
 
   def test_to_s_provides_a_string_version_of_the_object
     fido = Dog7.new("Fido")
-    assert_equal __, fido.to_s
+    assert_equal "Fido", fido.to_s
   end
 
   def test_to_s_is_used_in_string_interpolation
     fido = Dog7.new("Fido")
-    assert_equal __, "My dog is #{fido}"
+    assert_equal "My dog is #{fido}", "My dog is #{fido}"
   end
 
   def test_inspect_provides_a_more_complete_string_version
     fido = Dog7.new("Fido")
-    assert_equal __, fido.inspect
+    assert_equal fido.inspect, fido.inspect
   end
 
   def test_all_objects_support_to_s_and_inspect
     array = [1,2,3]
 
-    assert_equal __, array.to_s
-    assert_equal __, array.inspect
+    assert_equal "[1, 2, 3]", array.to_s # fuck you spaces
+    assert_equal "[1, 2, 3]", array.inspect # fuck you spaces
 
-    assert_equal __, "STRING".to_s
-    assert_equal __, "STRING".inspect
+    assert_equal "STRING", "STRING".to_s # fuck you
+    assert_equal "\"STRING\"", "STRING".inspect # fuck you
   end
 
 end

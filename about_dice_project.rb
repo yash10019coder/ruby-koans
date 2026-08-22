@@ -14,16 +14,14 @@ class DiceSet
   end
 
   def roll(number_of_rolls)
-    if not @values.length == 0
-      @values = []
-    end
     if not number_of_rolls.is_a?(Integer) 
       raise "number_of_rolls must be an integer"
     end
 
-    number_of_rolls.times {
-     @values << ((rand*10).to_i.+(1) % 6)
-    }
+    @values = []
+    number_of_rolls.times do
+     @values << (1 + rand(6))
+    end
 
   end
 end

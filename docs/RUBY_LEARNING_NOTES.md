@@ -11,6 +11,9 @@ overview; the detailed file-by-file notes are linked below.
 - [Strings](RUBY_STRINGS_NOTES.md)
 - [Symbols](RUBY_SYMBOLS_NOTES.md)
 - [Classes and class methods](RUBY_CLASS_METHODS_NOTES.md)
+- [Classes (objects, instance variables, accessors, initialize)](RUBY_CLASSES_NOTES.md)
+- [Constants (scoping, lookup, inheritance)](RUBY_CONSTANTS_NOTES.md)
+- [Dice Project (practical class exercise)](RUBY_DICE_PROJECT_NOTES.md)
 
 ## Strings: `+`, `+=`, and `<<`
 

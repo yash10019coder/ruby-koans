@@ -13,6 +13,7 @@ overview; the detailed file-by-file notes are linked below.
 - [Classes and class methods](RUBY_CLASS_METHODS_NOTES.md)
 - [Classes (objects, instance variables, accessors, initialize)](RUBY_CLASSES_NOTES.md)
 - [Constants (scoping, lookup, inheritance)](RUBY_CONSTANTS_NOTES.md)
+- [Exceptions (hierarchy, raising, rescuing, custom exceptions)](RUBY_EXCEPTIONS_NOTES.md)
 - [Dice Project (practical class exercise)](RUBY_DICE_PROJECT_NOTES.md)
 
 ## Strings: `+`, `+=`, and `<<`

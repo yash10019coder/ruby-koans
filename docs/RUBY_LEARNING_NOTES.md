@@ -15,6 +15,7 @@ overview; the detailed file-by-file notes are linked below.
 - [Constants (scoping, lookup, inheritance)](RUBY_CONSTANTS_NOTES.md)
 - [Exceptions (hierarchy, raising, rescuing, custom exceptions)](RUBY_EXCEPTIONS_NOTES.md)
 - [Hashes (keys, values, access, defaults, the mutable default trap)](RUBY_HASHES_NOTES.md)
+- [Inheritance (parent-child classes, method overriding, super, ancestors)](RUBY_INHERITANCE_NOTES.md)
 - [Dice Project (practical class exercise)](RUBY_DICE_PROJECT_NOTES.md)
 
 ## Strings: `+`, `+=`, and `<<`
